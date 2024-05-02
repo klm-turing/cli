@@ -1,5 +1,11 @@
 # Changelog
 
+## [7.5.2](https://github.com/npm/cli/compare/arborist-v7.5.1...arborist-v7.5.2) (2024-05-02)
+
+### Dependencies
+
+* [`63ef498`](https://github.com/npm/cli/commit/63ef498bf2916a882a92c0b9fe6de6728584694a) [#7457](https://github.com/npm/cli/pull/7457) `npm-registry-fetch@17.0.1`
+
 ## [7.5.1](https://github.com/npm/cli/compare/arborist-v7.5.0...arborist-v7.5.1) (2024-04-30)
 
 ### Bug Fixes

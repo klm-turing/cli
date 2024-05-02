@@ -1,5 +1,11 @@
 # Changelog
 
+## [8.0.6](https://github.com/npm/cli/compare/libnpmaccess-v8.0.5...libnpmaccess-v8.0.6) (2024-05-02)
+
+### Dependencies
+
+* [`63ef498`](https://github.com/npm/cli/commit/63ef498bf2916a882a92c0b9fe6de6728584694a) [#7457](https://github.com/npm/cli/pull/7457) `npm-registry-fetch@17.0.1`
+
 ## [8.0.5](https://github.com/npm/cli/compare/libnpmaccess-v8.0.4...libnpmaccess-v8.0.5) (2024-04-30)
 
 ### Bug Fixes

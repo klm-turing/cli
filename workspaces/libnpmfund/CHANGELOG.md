@@ -1,5 +1,11 @@
 # Changelog
 
+## [5.0.10](https://github.com/npm/cli/compare/libnpmfund-v5.0.9...libnpmfund-v5.0.10) (2024-05-02)
+
+### Dependencies
+
+* [workspace](https://github.com/npm/cli/releases/tag/arborist-v7.5.2): `@npmcli/arborist@7.5.2`
+
 ## [5.0.9](https://github.com/npm/cli/compare/libnpmfund-v5.0.8...libnpmfund-v5.0.9) (2024-04-30)
 
 ### Bug Fixes

@@ -1,5 +1,36 @@
 # Changelog
 
+## [10.7.1](https://github.com/npm/cli/compare/v10.7.0...v10.7.1) (2024-05-02)
+
+### Bug Fixes
+
+* [`261ea19`](https://github.com/npm/cli/commit/261ea193c96aaa73ce5630e21c6a31de9f19ef5b) [#7457](https://github.com/npm/cli/pull/7457) run input.start around help and openining urls (@lukekarrys)
+* [`4ab6cf4`](https://github.com/npm/cli/commit/4ab6cf4a9e7fca64f95422f4099b33cdbb9efa25) [#7459](https://github.com/npm/cli/pull/7459) publish: validate dist-tag (#7459) (@reggi)
+
+### Documentation
+
+* [`f6fff32`](https://github.com/npm/cli/commit/f6fff3295d19b63003cf49eb1c4805f453c5390a) [#7433](https://github.com/npm/cli/pull/7433) clarify what peerDependenciesMeta does (#7433) (@xuhdev, @wraithgar)
+
+### Dependencies
+
+* [`63ef498`](https://github.com/npm/cli/commit/63ef498bf2916a882a92c0b9fe6de6728584694a) [#7457](https://github.com/npm/cli/pull/7457) `npm-registry-fetch@17.0.1`
+* [`4cbc2d4`](https://github.com/npm/cli/commit/4cbc2d402174933052c7addd6ea55b1ecee202c5) [#7457](https://github.com/npm/cli/pull/7457) `npm-profile@10.0.0`
+* [workspace](https://github.com/npm/cli/releases/tag/arborist-v7.5.2): `@npmcli/arborist@7.5.2`
+* [workspace](https://github.com/npm/cli/releases/tag/libnpmaccess-v8.0.6): `libnpmaccess@8.0.6`
+* [workspace](https://github.com/npm/cli/releases/tag/libnpmdiff-v6.1.2): `libnpmdiff@6.1.2`
+* [workspace](https://github.com/npm/cli/releases/tag/libnpmexec-v8.1.1): `libnpmexec@8.1.1`
+* [workspace](https://github.com/npm/cli/releases/tag/libnpmfund-v5.0.10): `libnpmfund@5.0.10`
+* [workspace](https://github.com/npm/cli/releases/tag/libnpmhook-v10.0.5): `libnpmhook@10.0.5`
+* [workspace](https://github.com/npm/cli/releases/tag/libnpmorg-v6.0.6): `libnpmorg@6.0.6`
+* [workspace](https://github.com/npm/cli/releases/tag/libnpmpack-v7.0.2): `libnpmpack@7.0.2`
+* [workspace](https://github.com/npm/cli/releases/tag/libnpmpublish-v9.0.8): `libnpmpublish@9.0.8`
+* [workspace](https://github.com/npm/cli/releases/tag/libnpmsearch-v7.0.5): `libnpmsearch@7.0.5`
+* [workspace](https://github.com/npm/cli/releases/tag/libnpmteam-v6.0.5): `libnpmteam@6.0.5`
+
+### Chores
+
+* [`8ded848`](https://github.com/npm/cli/commit/8ded848b099297a12a81ec008d6229f3ad3494a6) [#7457](https://github.com/npm/cli/pull/7457) remove doctor snapshot stack traces (@lukekarrys)
+
 ## [10.7.0](https://github.com/npm/cli/compare/v10.6.0...v10.7.0) (2024-04-30)
 
 ### Features

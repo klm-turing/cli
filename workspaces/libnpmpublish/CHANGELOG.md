@@ -1,5 +1,11 @@
 # Changelog
 
+## [9.0.8](https://github.com/npm/cli/compare/libnpmpublish-v9.0.7...libnpmpublish-v9.0.8) (2024-05-02)
+
+### Dependencies
+
+* [`63ef498`](https://github.com/npm/cli/commit/63ef498bf2916a882a92c0b9fe6de6728584694a) [#7457](https://github.com/npm/cli/pull/7457) `npm-registry-fetch@17.0.1`
+
 ## [9.0.7](https://github.com/npm/cli/compare/libnpmpublish-v9.0.6...libnpmpublish-v9.0.7) (2024-04-30)
 
 ### Bug Fixes
