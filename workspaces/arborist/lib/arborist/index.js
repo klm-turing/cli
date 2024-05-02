@@ -92,10 +92,6 @@ class PackumentCache extends LRUCache {
   }
 }
 
-// XXX: Does it make a difference to create the packumentCache as a global singleton?
-// Meaning: do we want to share this cache between all arborist constructors or not?
-const packumentCache = new PackumentCache()
-
 const mixins = [
   require('../tracker.js'),
   require('./build-ideal-tree.js'),
@@ -143,7 +139,10 @@ class Arborist extends Base {
       installStrategy: options.global ? 'shallow' : (options.installStrategy ? options.installStrategy : 'hoisted'),
       lockfileVersion: lockfileVersion(options.lockfileVersion),
       packageLockOnly: !!options.packageLockOnly,
-      packumentCache: options.packumentCache || packumentCache,
+      // XXX: Does it make a difference to create the packumentCache as a global singleton?
+      // Meaning: do we want to share this cache between all arborist constructors or not?
+      // If so we could move this to the CLI and pass it down when we create new arborist instances
+      packumentCache: options.packumentCache || new PackumentCache(),
       path: options.path || '.',
       rebuildBundle: 'rebuildBundle' in options ? !!options.rebuildBundle : true,
       replaceRegistryHost: options.replaceRegistryHost,
