@@ -35,6 +35,7 @@ const { log, time } = require('proc-log')
 const { saveTypeMap } = require('../add-rm-pkg-deps.js')
 const AuditReport = require('../audit-report.js')
 const relpath = require('../relpath.js')
+const { LRUCache } = require('lru-cache')
 
 const mixins = [
   require('../tracker.js'),
@@ -82,7 +83,10 @@ class Arborist extends Base {
       installStrategy: options.global ? 'shallow' : (options.installStrategy ? options.installStrategy : 'hoisted'),
       lockfileVersion: lockfileVersion(options.lockfileVersion),
       packageLockOnly: !!options.packageLockOnly,
-      packumentCache: options.packumentCache || new Map(),
+      packumentCache: options.packumentCache || new LRUCache({
+        maxSize: Math.floor(require('node:v8').getHeapStatistics().heap_size_limit * .25),
+        sizeCalculation: p => p._contentLength,
+      }),
       path: options.path || '.',
       rebuildBundle: 'rebuildBundle' in options ? !!options.rebuildBundle : true,
       replaceRegistryHost: options.replaceRegistryHost,

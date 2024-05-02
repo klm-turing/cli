@@ -60,6 +60,7 @@ class Inventory extends Map {
         // if the node has the value, use it even if it's false
         val = node[key]
       } else if (key === 'license' && node.package) {
+        // TODO build-ideal-tree removes this?
         // handling for the outdated "licenses" array, just pick the first one
         // also support the alternative spelling "licence"
         if (node.package.license) {
