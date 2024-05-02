@@ -40,7 +40,7 @@ const { LRUCache } = require('lru-cache')
 class PackumentCache extends LRUCache {
   static #heapLimit = require('node:v8').getHeapStatistics().heap_size_limit
 
-  #sizeKey = '_contentLength'
+  #sizeKey
   #disposed = new Set()
 
   #log (...args) {
@@ -48,7 +48,7 @@ class PackumentCache extends LRUCache {
     log.silly('packumentCache', ...args)
   }
 
-  constructor ({ heapFactor = 0.25, maxEntryFactor = 0.5 } = {}) {
+  constructor ({ heapFactor = 0.25, maxEntryFactor = 0.5, sizeKey = '_contentLength' } = {}) {
     const maxSize = Math.floor(PackumentCache.#heapLimit * heapFactor)
     super({
       maxSize,
@@ -56,8 +56,8 @@ class PackumentCache extends LRUCache {
       sizeCalculation (p) {
         // I saw some requests without a content length once but can't reproduce anymore
         // lru cache will error if sizeCalculation isnt a positive number
-        if (p[this.#sizeKey]) {
-          return p[this.#sizeKey]
+        if (p[sizeKey]) {
+          return p[sizeKey]
         }
         // Get the current average size of packuments in the cache
         // Won't work if cache is empty or no items have a size
@@ -72,6 +72,7 @@ class PackumentCache extends LRUCache {
         this.#log('dispose', k)
       },
     })
+    this.#sizeKey = sizeKey
   }
 
   set (k, v, ...args) {
