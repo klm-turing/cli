@@ -53,7 +53,7 @@ class PackumentCache extends LRUCache {
     super({
       maxSize,
       maxEntrySize: maxSize * maxEntryFactor,
-      sizeCalculation (p) {
+      sizeCalculation: (p) => {
         // I saw some requests without a content length once but can't reproduce anymore
         // lru cache will error if sizeCalculation isnt a positive number
         if (p[sizeKey]) {
@@ -67,7 +67,7 @@ class PackumentCache extends LRUCache {
         // Some very wrong random guess at global average packument size
         return 1_000_000
       },
-      dispose (v, k) {
+      dispose: (v, k) => {
         this.#disposed.add(k)
         this.#log('dispose', k)
       },
