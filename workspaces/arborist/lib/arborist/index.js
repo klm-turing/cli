@@ -37,6 +37,65 @@ const AuditReport = require('../audit-report.js')
 const relpath = require('../relpath.js')
 const { LRUCache } = require('lru-cache')
 
+class PackumentCache extends LRUCache {
+  static #heapLimit = require('node:v8').getHeapStatistics().heap_size_limit
+
+  #sizeKey = '_contentLength'
+  #disposed = new Set()
+
+  #log (...args) {
+    // It's all silly
+    log.silly('packumentCache', ...args)
+  }
+
+  constructor ({ heapFactor = 0.25, maxEntryFactor = 0.5 } = {}) {
+    const maxSize = Math.floor(PackumentCache.#heapLimit * heapFactor)
+    super({
+      maxSize,
+      maxEntrySize: maxSize * maxEntryFactor,
+      sizeCalculation (p) {
+        // I saw some requests without a content length once but can't reproduce anymore
+        // lru cache will error if sizeCalculation isnt a positive number
+        if (p[this.#sizeKey]) {
+          return p[this.#sizeKey]
+        }
+        // Get the current average size of packuments in the cache
+        // Won't work if cache is empty or no items have a size
+        if (this.calculatedSize && this.size) {
+          return this.calculatedSize / this.size
+        }
+        // Some very wrong random guess at global average packument size
+        return 1_000_000
+      },
+      dispose (v, k) {
+        this.#disposed.add(k)
+        this.#log('dispose', k)
+      },
+    })
+  }
+
+  set (k, v, ...args) {
+    if (this.#disposed.has(k)) {
+      this.#disposed.delete(k)
+      this.#log('set disposed', k)
+    }
+    if (!v[this.#sizeKey]) {
+      this.#log('no size', k)
+    }
+    return super.set(k, v, ...args)
+  }
+
+  has (k, ...args) {
+    const has = super.has(k, ...args)
+    this.#log(`cache-${has ? 'hit' : 'miss'}`, k)
+    return has
+  }
+}
+
+// XXX: Does it make a difference to create the packumentCache as a global singleton?
+// Meaning: do we want to share this cache between all arborist constructors or not?
+const packumentCache = new PackumentCache()
+
 const mixins = [
   require('../tracker.js'),
   require('./build-ideal-tree.js'),
@@ -68,6 +127,7 @@ const lockfileVersion = lfv => {
 class Arborist extends Base {
   constructor (options = {}) {
     const timeEnd = time.start('arborist:ctor')
+
     super(options)
     this.options = {
       nodeVersion: process.version,
@@ -83,10 +143,7 @@ class Arborist extends Base {
       installStrategy: options.global ? 'shallow' : (options.installStrategy ? options.installStrategy : 'hoisted'),
       lockfileVersion: lockfileVersion(options.lockfileVersion),
       packageLockOnly: !!options.packageLockOnly,
-      packumentCache: options.packumentCache || new LRUCache({
-        maxSize: Math.floor(require('node:v8').getHeapStatistics().heap_size_limit * .25),
-        sizeCalculation: p => p._contentLength,
-      }),
+      packumentCache: options.packumentCache || packumentCache,
       path: options.path || '.',
       rebuildBundle: 'rebuildBundle' in options ? !!options.rebuildBundle : true,
       replaceRegistryHost: options.replaceRegistryHost,
